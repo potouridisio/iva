@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@types/dom-speech-recognition': ^0.0.2
   '@types/react': ^18.2.15
   '@types/react-dom': ^18.2.7
   '@typescript-eslint/eslint-plugin': ^6.0.0
@@ -24,6 +25,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
 
 devDependencies:
+  '@types/dom-speech-recognition': 0.0.2
   '@types/react': 18.2.25
   '@types/react-dom': 18.2.10
   '@typescript-eslint/eslint-plugin': 6.7.4_sjhwt3bl5psuxqi3hx6z7r6ola
@@ -477,6 +479,10 @@ packages:
 
   /@swc/types/0.1.5:
     resolution: {integrity: sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==}
+    dev: true
+
+  /@types/dom-speech-recognition/0.0.2:
+    resolution: {integrity: sha512-GZbxBsBYBMAbpPDYg64KhAr/V8MbrlsNqrjnZJGikLdNqlQbTu+u548jg7c31ZI30/vXAX+v31t/aDr4soiBEg==}
     dev: true
 
   /@types/json-schema/7.0.13:
