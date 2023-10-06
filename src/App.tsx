@@ -1,34 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Mic } from 'lucide-react'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="flex h-screen flex-col bg-neutral-200">
+      <header className="sticky top-0 flex justify-center bg-white p-4">
+        <h1 className="text-2xl font-bold">Iva</h1>
+      </header>
+      <main className="flex grow flex-col-reverse overflow-y-auto p-4">
+        <ul className="space-y-4">
+          <li className="flex">
+            <div className="max-w-3/5 rounded-2xl rounded-tl-none bg-white p-4">
+              <p>Interviewer's question</p>
+            </div>
+          </li>
+          <li className="flex flex-row-reverse">
+            <div className="max-w-3/5 rounded-2xl rounded-br-none bg-blue-500 p-4 text-white">
+              <p>OpenAI's response</p>
+            </div>
+          </li>
+        </ul>
+      </main>
+      <footer className="sticky bottom-0 flex justify-center bg-white p-4">
+        <button className="rounded-full bg-red-500 p-3 text-white">
+          <Mic />
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      </footer>
+    </div>
   )
 }
 
