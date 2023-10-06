@@ -1,4 +1,4 @@
-import { Mic } from 'lucide-react'
+import RecordButton from './RecordButton'
 
 function App() {
   return (
@@ -21,9 +21,7 @@ function App() {
         </ul>
       </main>
       <footer className="sticky bottom-0 flex justify-center bg-white p-4">
-        <button className="rounded-full bg-red-500 p-3 text-white">
-          <Mic />
-        </button>
+        <RecordButton />
       </footer>
     </div>
   )
