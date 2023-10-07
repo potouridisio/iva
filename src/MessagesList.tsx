@@ -1,16 +1,25 @@
-function MessagesList() {
+import type { Message } from './types'
+import ChatBubble from './ChatBubble'
+
+type MessagesListProps = {
+  messages: Message[]
+}
+
+function MessagesList({ messages }: MessagesListProps) {
   return (
     <ul className="space-y-4">
-      <li className="flex">
-        <div className="max-w-3/5 rounded-2xl rounded-tl-none bg-white p-4">
-          <p>Interviewer's question</p>
-        </div>
-      </li>
-      <li className="flex flex-row-reverse">
-        <div className="max-w-3/5 rounded-2xl rounded-br-none bg-blue-500 p-4 text-white">
-          <p>OpenAI's response</p>
-        </div>
-      </li>
+      {messages.map((message, index) => {
+        const isYou = message.role === 'assistant'
+
+        return (
+          <li className={`flex${isYou ? ' flex-row-reverse' : ''}`} key={index}>
+            <ChatBubble
+              variant={isYou ? 'sent' : 'received'}
+              content={message.content}
+            />
+          </li>
+        )
+      })}
     </ul>
   )
 }
