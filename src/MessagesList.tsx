@@ -1,11 +1,53 @@
 import type { Message } from './types'
 import ChatBubble from './ChatBubble'
+import { useState, useEffect } from 'react'
+import OpenAI from 'openai'
+
+const openai = new OpenAI({
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true,
+})
 
 type MessagesListProps = {
   messages: Message[]
+  onCreateChatCompletionStop: (content: string) => void
 }
 
-function MessagesList({ messages }: MessagesListProps) {
+function MessagesList({
+  messages,
+  onCreateChatCompletionStop,
+}: MessagesListProps) {
+  const [content, setContent] = useState('')
+
+  useEffect(() => {
+    if (messages.length === 0) return
+    const lastMessage = messages[messages.length - 1]
+    if (lastMessage.role !== 'user') return
+
+    async function createChatCompletion() {
+      const completion = await openai.chat.completions.create({
+        messages,
+        model: 'gpt-3.5-turbo',
+        stream: true,
+      })
+
+      let content = ''
+      for await (const chunk of completion) {
+        const nextContent = chunk.choices[0].delta.content || ''
+        content += nextContent
+        if (chunk.choices[0].finish_reason === 'stop') {
+          onCreateChatCompletionStop(content)
+          setContent('')
+          break
+        }
+        setContent((prevContent) => prevContent + nextContent)
+      }
+    }
+
+    createChatCompletion()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages])
+
   return (
     <ul className="space-y-4">
       {messages.map((message, index) => {
@@ -20,6 +62,11 @@ function MessagesList({ messages }: MessagesListProps) {
           </li>
         )
       })}
+      {content && (
+        <li className="flex flex-row-reverse">
+          <ChatBubble variant="sent" content={content} />
+        </li>
+      )}
     </ul>
   )
 }
