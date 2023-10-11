@@ -11,13 +11,10 @@ const openai = new OpenAI({
 
 type MessagesListProps = {
   messages: Message[]
-  onCreateChatCompletionStop: (content: string) => void
+  onStreamStop: (content: string) => void
 }
 
-function MessagesList({
-  messages,
-  onCreateChatCompletionStop,
-}: MessagesListProps) {
+function MessagesList({ messages, onStreamStop }: MessagesListProps) {
   const [content, setContent] = useState('')
 
   useEffect(() => {
@@ -44,7 +41,7 @@ function MessagesList({
         if (chunk.choices[0].finish_reason === 'stop') {
           setContent('')
 
-          onCreateChatCompletionStop(content)
+          onStreamStop(content)
 
           break
         }

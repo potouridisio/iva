@@ -17,7 +17,7 @@ function App() {
     ])
   }, [])
 
-  const handleCreateChatCompletionStop = useCallback((content: string) => {
+  const handleStreamStop = useCallback((content: string) => {
     setMessages((prev) => [...prev, { content, role: 'assistant' }])
   }, [])
 
@@ -28,10 +28,7 @@ function App() {
       </header>
 
       <main className="flex grow flex-col-reverse overflow-y-auto p-4">
-        <MessagesList
-          messages={messages}
-          onCreateChatCompletionStop={handleCreateChatCompletionStop}
-        />
+        <MessagesList messages={messages} onStreamStop={handleStreamStop} />
       </main>
 
       <footer className="sticky bottom-0 flex justify-center bg-white p-4">
