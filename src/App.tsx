@@ -8,17 +8,17 @@ function App() {
   const [messages, setMessages] = useState<Message[]>([])
 
   const handleRecognitionResult = useCallback((transcript: string) => {
-    setMessages((prev) => [
-      ...prev,
-      {
-        content: transcript.trim(),
-        role: 'user',
-      },
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { content: transcript.trim(), role: 'user' },
     ])
   }, [])
 
   const handleStreamStop = useCallback((content: string) => {
-    setMessages((prev) => [...prev, { content, role: 'assistant' }])
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { content, role: 'assistant' },
+    ])
   }, [])
 
   return (
