@@ -46,7 +46,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
           break
         }
 
-        setContent((prevContent) => prevContent + nextContent)
+        setContent(content)
       }
     }
 
