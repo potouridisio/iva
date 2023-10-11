@@ -24,7 +24,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
 
     if (lastMessage.role !== 'user') return
 
-    async function createChatCompletion() {
+    async function create() {
       const stream = await openai.chat.completions.create({
         messages,
         model: 'gpt-3.5-turbo',
@@ -50,7 +50,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
       }
     }
 
-    createChatCompletion()
+    create()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages])
 
