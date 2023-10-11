@@ -25,7 +25,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
     if (lastMessage.role !== 'user') return
 
     async function createChatCompletion() {
-      const completion = await openai.chat.completions.create({
+      const stream = await openai.chat.completions.create({
         messages,
         model: 'gpt-3.5-turbo',
         stream: true,
@@ -33,7 +33,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
 
       let content = ''
 
-      for await (const chunk of completion) {
+      for await (const chunk of stream) {
         const nextContent = chunk.choices[0].delta.content || ''
 
         content += nextContent
