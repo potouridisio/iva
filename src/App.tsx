@@ -1,6 +1,7 @@
-import RecordButton from './RecordButton'
+import { useCallback, useState } from 'react'
+
 import MessagesList from './MessagesList'
-import { useState, useCallback } from 'react'
+import RecordButton from './RecordButton'
 import type { Message } from './types'
 
 function App() {
@@ -25,12 +26,14 @@ function App() {
       <header className="sticky top-0 flex justify-center bg-white p-4">
         <h1 className="text-2xl font-bold">Iva</h1>
       </header>
+
       <main className="flex grow flex-col-reverse overflow-y-auto p-4">
         <MessagesList
           messages={messages}
           onCreateChatCompletionStop={handleCreateChatCompletionStop}
         />
       </main>
+
       <footer className="sticky bottom-0 flex justify-center bg-white p-4">
         <RecordButton onRecognitionResult={handleRecognitionResult} />
       </footer>

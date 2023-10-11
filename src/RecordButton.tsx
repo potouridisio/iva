@@ -1,5 +1,5 @@
 import { Mic, MicOff } from 'lucide-react'
-import { useRef, useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 type RecordButtonProps = {
   onRecognitionResult: (transcript: string) => void
@@ -13,11 +13,15 @@ function RecordButton({ onRecognitionResult }: RecordButtonProps) {
   useEffect(() => {
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition
+
     recognition.current = new SpeechRecognition()
+
     const onEnd = () => {
       if (prevIsRecording.current) return
+
       recognition.current?.start()
     }
+
     const onResult = (event: SpeechRecognitionEvent) => {
       onRecognitionResult(event.results[0][0].transcript)
     }
@@ -34,11 +38,13 @@ function RecordButton({ onRecognitionResult }: RecordButtonProps) {
 
   const toggleRecording = () => {
     prevIsRecording.current = isRecording
+
     if (isRecording) {
       recognition.current?.stop()
     } else {
       recognition.current?.start()
     }
+
     setIsRecording(!isRecording)
   }
 

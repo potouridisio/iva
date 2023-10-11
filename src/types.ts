@@ -1,4 +1,4 @@
 export type Message = {
   content: string
-  role: 'system' | 'user' | 'assistant'
+  role: 'assistant' | 'system' | 'user'
 }

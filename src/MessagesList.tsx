@@ -1,7 +1,8 @@
-import type { Message } from './types'
-import ChatBubble from './ChatBubble'
-import { useState, useEffect } from 'react'
 import OpenAI from 'openai'
+import { useEffect, useState } from 'react'
+
+import ChatBubble from './ChatBubble'
+import type { Message } from './types'
 
 const openai = new OpenAI({
   apiKey: import.meta.env.VITE_OPENAI_API_KEY,
@@ -21,7 +22,9 @@ function MessagesList({
 
   useEffect(() => {
     if (messages.length === 0) return
+
     const lastMessage = messages[messages.length - 1]
+
     if (lastMessage.role !== 'user') return
 
     async function createChatCompletion() {
@@ -32,14 +35,20 @@ function MessagesList({
       })
 
       let content = ''
+
       for await (const chunk of completion) {
         const nextContent = chunk.choices[0].delta.content || ''
+
         content += nextContent
+
         if (chunk.choices[0].finish_reason === 'stop') {
-          onCreateChatCompletionStop(content)
           setContent('')
+
+          onCreateChatCompletionStop(content)
+
           break
         }
+
         setContent((prevContent) => prevContent + nextContent)
       }
     }
@@ -56,15 +65,15 @@ function MessagesList({
         return (
           <li className={`flex${isYou ? ' flex-row-reverse' : ''}`} key={index}>
             <ChatBubble
-              variant={isYou ? 'sent' : 'received'}
               content={message.content}
+              variant={isYou ? 'sent' : 'received'}
             />
           </li>
         )
       })}
       {content && (
         <li className="flex flex-row-reverse">
-          <ChatBubble variant="sent" content={content} />
+          <ChatBubble content={content} variant="sent" />
         </li>
       )}
     </ul>

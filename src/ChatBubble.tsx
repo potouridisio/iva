@@ -1,10 +1,9 @@
 type ChatBubbleProps = {
-  content: string | null
-} & {
-  variant: 'sent' | 'received'
+  content: null | string
+  variant: 'received' | 'sent'
 }
 
-function ChatBubble({ variant, content }: ChatBubbleProps) {
+function ChatBubble({ content, variant }: ChatBubbleProps) {
   const isSent = variant === 'sent'
 
   return (
