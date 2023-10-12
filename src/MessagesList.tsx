@@ -1,7 +1,9 @@
+import { useAtom } from 'jotai'
 import OpenAI from 'openai'
 import { useEffect, useState } from 'react'
 
 import ChatBubble from './ChatBubble'
+import { interimAtom } from './store'
 import type { Message } from './types'
 
 const openai = new OpenAI({
@@ -15,6 +17,7 @@ type MessagesListProps = {
 }
 
 function MessagesList({ messages, onStreamStop }: MessagesListProps) {
+  const [interim] = useAtom(interimAtom)
   const [content, setContent] = useState('')
 
   useEffect(() => {
@@ -68,6 +71,11 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
           </li>
         )
       })}
+      {interim && (
+        <li className="flex">
+          <ChatBubble content={interim} variant="received" />
+        </li>
+      )}
       {content && (
         <li className="flex flex-row-reverse">
           <ChatBubble content={content} variant="sent" />
