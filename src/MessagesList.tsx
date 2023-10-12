@@ -70,7 +70,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
 
   return (
     <ul className="space-y-4">
-      {messages.map((message, index) => {
+      {messages.slice(1).map((message, index) => {
         const isYou = message.role === 'assistant'
 
         return (
