@@ -16,6 +16,8 @@ function RecordButton({ onRecognitionResult }: RecordButtonProps) {
 
     recognition.current = new SpeechRecognition()
 
+    recognition.current.interimResults = true
+
     const onEnd = () => {
       if (prevIsRecording.current) return
 
@@ -23,7 +25,11 @@ function RecordButton({ onRecognitionResult }: RecordButtonProps) {
     }
 
     const onResult = (event: SpeechRecognitionEvent) => {
-      onRecognitionResult(event.results[0][0].transcript)
+      for (let index = 0; index < event.results.length; ++index) {
+        if (event.results[index].isFinal) {
+          onRecognitionResult(event.results[index][0].transcript)
+        }
+      }
     }
 
     recognition.current.addEventListener('end', onEnd)
