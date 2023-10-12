@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai'
 import OpenAI from 'openai'
-import { useEffect, useState } from 'react'
+import type { Stream } from 'openai/streaming'
+import { useEffect, useRef, useState } from 'react'
 
 import ChatBubble from './ChatBubble'
 import { interimAtom } from './store'
@@ -18,6 +19,8 @@ type MessagesListProps = {
 
 function MessagesList({ messages, onStreamStop }: MessagesListProps) {
   const [interim] = useAtom(interimAtom)
+  const stream =
+    useRef<null | Stream<OpenAI.Chat.Completions.ChatCompletionChunk>>(null)
   const [content, setContent] = useState('')
 
   useEffect(() => {
@@ -28,7 +31,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
     if (lastMessage.role !== 'user') return
 
     async function create() {
-      const stream = await openai.chat.completions.create({
+      stream.current = await openai.chat.completions.create({
         messages,
         model: 'gpt-3.5-turbo',
         stream: true,
@@ -36,7 +39,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
 
       let content = ''
 
-      for await (const chunk of stream) {
+      for await (const chunk of stream.current) {
         const nextContent = chunk.choices[0].delta.content || ''
 
         content += nextContent
@@ -56,6 +59,14 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
     create()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages])
+
+  useEffect(() => {
+    if (!interim) return
+
+    stream.current?.controller.abort()
+
+    setContent('')
+  }, [interim])
 
   return (
     <ul className="space-y-4">
