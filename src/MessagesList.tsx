@@ -21,7 +21,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
   const [interim] = useAtom(interimAtom)
   const stream =
     useRef<null | Stream<OpenAI.Chat.Completions.ChatCompletionChunk>>(null)
-  const [content, setContent] = useState('')
+  const [streamedContent, setStreamedContent] = useState('')
 
   useEffect(() => {
     if (messages.length === 0) return
@@ -37,22 +37,22 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
         stream: true,
       })
 
-      let content = ''
+      let streamedContent = ''
 
       for await (const chunk of stream.current) {
-        const nextContent = chunk.choices[0].delta.content || ''
+        const content = chunk.choices[0].delta.content || ''
 
-        content += nextContent
+        streamedContent += content
 
         if (chunk.choices[0].finish_reason === 'stop') {
-          setContent('')
+          setStreamedContent('')
 
-          onStreamStop(content)
+          onStreamStop(streamedContent)
 
           break
         }
 
-        setContent(content)
+        setStreamedContent(streamedContent)
       }
     }
 
@@ -65,7 +65,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
 
     stream.current?.controller.abort()
 
-    setContent('')
+    setStreamedContent('')
   }, [interim])
 
   return (
@@ -87,9 +87,9 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
           <ChatBubble content={interim} variant="received" />
         </li>
       )}
-      {content && (
+      {streamedContent && (
         <li className="flex flex-row-reverse">
-          <ChatBubble content={content} variant="sent" />
+          <ChatBubble content={streamedContent} variant="sent" />
         </li>
       )}
     </ul>
