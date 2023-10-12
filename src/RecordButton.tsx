@@ -59,6 +59,7 @@ function RecordButton({ onRecognitionResult }: RecordButtonProps) {
       recognition.current?.stop()
     } else {
       recognition.current?.start()
+
       setInterim('')
     }
 
