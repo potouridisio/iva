@@ -4,7 +4,7 @@ import type { Stream } from 'openai/streaming'
 import { useEffect, useRef, useState } from 'react'
 
 import ChatBubble from './ChatBubble'
-import { interimAtom } from './store'
+import { interimTranscriptAtom } from './store'
 import type { Message } from './types'
 
 const openai = new OpenAI({
@@ -18,7 +18,7 @@ type MessagesListProps = {
 }
 
 function MessagesList({ messages, onStreamStop }: MessagesListProps) {
-  const [interim] = useAtom(interimAtom)
+  const [interimTranscript] = useAtom(interimTranscriptAtom)
   const stream =
     useRef<null | Stream<OpenAI.Chat.Completions.ChatCompletionChunk>>(null)
   const [streamedContent, setStreamedContent] = useState('')
@@ -61,12 +61,12 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
   }, [messages])
 
   useEffect(() => {
-    if (!interim) return
+    if (!interimTranscript) return
 
     stream.current?.controller.abort()
 
     setStreamedContent('')
-  }, [interim])
+  }, [interimTranscript])
 
   return (
     <ul className="space-y-4">
@@ -82,9 +82,9 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
           </li>
         )
       })}
-      {interim && (
+      {interimTranscript && (
         <li className="flex">
-          <ChatBubble content={interim} variant="received" />
+          <ChatBubble content={interimTranscript} variant="received" />
         </li>
       )}
       {streamedContent && (

@@ -1,3 +1,3 @@
 import { atom } from 'jotai'
 
-export const interimAtom = atom('')
+export const interimTranscriptAtom = atom('')

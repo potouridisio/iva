@@ -2,14 +2,14 @@ import { useAtom } from 'jotai'
 import { Mic, MicOff } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
-import { interimAtom } from './store'
+import { interimTranscriptAtom } from './store'
 
 type RecordButtonProps = {
   onRecognitionResult: (transcript: string) => void
 }
 
 function RecordButton({ onRecognitionResult }: RecordButtonProps) {
-  const [, setInterim] = useAtom(interimAtom)
+  const [, setInterimTranscript] = useAtom(interimTranscriptAtom)
   const recognition = useRef<SpeechRecognition | null>(null)
   const [isRecording, setIsRecording] = useState(false)
   const prevIsRecording = useRef(isRecording)
@@ -39,7 +39,7 @@ function RecordButton({ onRecognitionResult }: RecordButtonProps) {
         }
       }
 
-      setInterim(interim)
+      setInterimTranscript(interim)
     }
 
     recognition.current.addEventListener('end', onEnd)
@@ -60,7 +60,7 @@ function RecordButton({ onRecognitionResult }: RecordButtonProps) {
     } else {
       recognition.current?.start()
 
-      setInterim('')
+      setInterimTranscript('')
     }
 
     setIsRecording(!isRecording)
