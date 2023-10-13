@@ -3,9 +3,9 @@ import OpenAI from 'openai'
 import type { Stream } from 'openai/streaming'
 import { useEffect, useRef, useState } from 'react'
 
+import { interimTranscriptAtom } from '../store'
+import type { Message } from '../types'
 import ChatBubble from './ChatBubble'
-import { interimTranscriptAtom } from './store'
-import type { Message } from './types'
 
 const openai = new OpenAI({
   apiKey: import.meta.env.VITE_OPENAI_API_KEY,
