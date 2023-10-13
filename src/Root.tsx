@@ -3,8 +3,10 @@ import { useCallback, useState } from 'react'
 import MessagesList from './MessagesList'
 import RecordButton from './RecordButton'
 import type { Message } from './types'
+import LinkedInLoginButton from './LinkedInLoginButton'
 
 function Root() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     {
       content:
@@ -12,6 +14,11 @@ function Root() {
       role: 'system',
     },
   ])
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleLinkedInLoginSuccess = useCallback((_code: string) => {
+    setIsAuthenticated(true)
+  }, [])
 
   const handleRecognitionResult = useCallback((transcript: string) => {
     setMessages((prevMessages) => [
@@ -38,7 +45,11 @@ function Root() {
       </main>
 
       <footer className="sticky bottom-0 flex justify-center bg-white p-4">
-        <RecordButton onRecognitionResult={handleRecognitionResult} />
+        {isAuthenticated ? (
+          <RecordButton onRecognitionResult={handleRecognitionResult} />
+        ) : (
+          <LinkedInLoginButton onSuccess={handleLinkedInLoginSuccess} />
+        )}
       </footer>
     </div>
   )
