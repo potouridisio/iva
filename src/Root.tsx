@@ -4,7 +4,7 @@ import MessagesList from './MessagesList'
 import RecordButton from './RecordButton'
 import type { Message } from './types'
 
-function App() {
+function Root() {
   const [messages, setMessages] = useState<Message[]>([
     {
       content:
@@ -44,4 +44,4 @@ function App() {
   )
 }
 
-export default App
+export default Root
