@@ -1,15 +1,13 @@
 import { Linkedin } from 'lucide-react'
 import { useLinkedIn } from 'react-linkedin-login-oauth2'
 
-import { LINKEDIN_CLIENT_ID } from '../lib/constants'
-
 type LinkedInLoginButtonProps = {
   onSuccess: (code: string) => void
 }
 
 function LinkedInLoginButton({ onSuccess }: LinkedInLoginButtonProps) {
   const { linkedInLogin } = useLinkedIn({
-    clientId: LINKEDIN_CLIENT_ID,
+    clientId: '773tzc1jxss3gh',
     onSuccess,
     redirectUri: `${window.location.origin}/linkedin`,
     scope: 'openid,profile,email',

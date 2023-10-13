@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client'
 import { LinkedInCallback } from 'react-linkedin-login-oauth2'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import Root from './routes/Root.tsx'
+import Root from './routes/root.tsx'
 
 const router = createBrowserRouter([
   {
