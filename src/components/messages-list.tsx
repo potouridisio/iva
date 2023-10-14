@@ -21,6 +21,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
   const [interimTranscript] = useAtom(interimTranscriptAtom)
   const stream =
     useRef<null | Stream<OpenAI.Chat.Completions.ChatCompletionChunk>>(null)
+  const timeoutID = useRef(0)
   const [streamedContent, setStreamedContent] = useState('')
 
   useEffect(() => {
@@ -56,7 +57,12 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
       }
     }
 
-    create()
+    function delayedCreate() {
+      timeoutID.current = setTimeout(create, 2 * 1000)
+    }
+
+    delayedCreate()
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages])
 
@@ -64,6 +70,8 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
     if (!interimTranscript) return
 
     stream.current?.controller.abort()
+
+    clearTimeout(timeoutID.current)
 
     setStreamedContent('')
   }, [interimTranscript])
