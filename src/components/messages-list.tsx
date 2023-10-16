@@ -3,6 +3,7 @@ import OpenAI from 'openai'
 import type { Stream } from 'openai/streaming'
 import { useEffect, useRef, useState } from 'react'
 
+import { cn } from '@/lib/utils'
 import { interimTranscriptAtom } from '@/store'
 import type { Message } from '@/types'
 
@@ -83,7 +84,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
         const isYou = message.role === 'assistant'
 
         return (
-          <li className={`flex${isYou ? ' flex-row-reverse' : ''}`} key={index}>
+          <li className={cn('flex', isYou && 'flex-row-reverse')} key={index}>
             <ChatBubble
               content={message.content}
               variant={isYou ? 'sent' : 'received'}

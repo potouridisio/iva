@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils'
+
 type ChatBubbleProps = {
   content: null | string
   variant: 'received' | 'sent'
@@ -8,9 +10,11 @@ function ChatBubble({ content, variant }: ChatBubbleProps) {
 
   return (
     <div
-      className={`max-w-3/5 rounded-2xl ${
-        isSent ? 'rounded-br-none bg-blue-500' : 'rounded-tl-none bg-white'
-      } p-4${isSent ? ' text-white' : ''}`}
+      className={cn(
+        'max-w-3/5 rounded-2xl bg-white p-4',
+        !isSent && 'rounded-tl-none',
+        isSent && 'rounded-br-none bg-blue-500 text-white'
+      )}
     >
       <p>{content}</p>
     </div>
