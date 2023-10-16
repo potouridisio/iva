@@ -3,8 +3,9 @@ import OpenAI from 'openai'
 import type { Stream } from 'openai/streaming'
 import { useEffect, useRef, useState } from 'react'
 
-import { interimTranscriptAtom } from '../store'
-import type { Message } from '../types'
+import { interimTranscriptAtom } from '@/store'
+import type { Message } from '@/types'
+
 import ChatBubble from './chat-bubble'
 
 const openai = new OpenAI({
@@ -58,7 +59,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
     }
 
     function delayedCreate() {
-      timeoutID.current = setTimeout(create, 2 * 1000)
+      timeoutID.current = window.setTimeout(create, 2 * 1000)
     }
 
     delayedCreate()
@@ -71,7 +72,7 @@ function MessagesList({ messages, onStreamStop }: MessagesListProps) {
 
     stream.current?.controller.abort()
 
-    clearTimeout(timeoutID.current)
+    window.clearTimeout(timeoutID.current)
 
     setStreamedContent('')
   }, [interimTranscript])

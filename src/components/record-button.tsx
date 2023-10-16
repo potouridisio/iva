@@ -2,7 +2,7 @@ import { useAtom } from 'jotai'
 import { Mic, MicOff } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
-import { interimTranscriptAtom } from '../store'
+import { interimTranscriptAtom } from '@/store'
 
 type RecordButtonProps = {
   onRecognitionResult: (transcript: string) => void

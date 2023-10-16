@@ -1,7 +1,7 @@
 import { Linkedin } from 'lucide-react'
 import { useLinkedIn } from 'react-linkedin-login-oauth2'
 
-import { LINKEDIN_CLIENT_ID } from '../lib/constants'
+import { LINKEDIN_CLIENT_ID } from '@/lib/constants'
 
 type LinkedInLoginButtonProps = {
   onSuccess: (code: string) => void

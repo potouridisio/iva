@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react'
 
-import LinkedInLoginButton from '../components/linked-in-login-button'
-import MessagesList from '../components/messages-list'
-import RecordButton from '../components/record-button'
-import type { Message } from '../types'
+import LinkedInLoginButton from '@/components/linked-in-login-button'
+import MessagesList from '@/components/messages-list'
+import RecordButton from '@/components/record-button'
+import type { Message } from '@/types'
 
 function Root() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
